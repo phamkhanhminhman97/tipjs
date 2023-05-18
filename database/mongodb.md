@@ -1,17 +1,52 @@
 
-# Mongo DB chọn  B-TREE
+  
+
+#  Mongo DB chọn B-TREE
+
+  
+
+*  ![alt](./mongo-design.png)
+
+  
+
+#  Embedding vs. Referencing
+
+  
+
+*  MongoDB sẽ cho ta 2 lựa chọn khi thiết kế dữ liệu. Chúng ta có thể gắn dữ liệu trực tiếp vào object, hoặc reference chúng và sử dụng $lookup operation để query.
+
+  
+
+*  *Reference mặc dù cơ bản tương tự với Relation trong SQL, nhưng MongoDB không cung cấp các tính năng quan hệ như khóa ngoại (foreign key) hoặc các ràng buộc (constraints) tự động liên quan đến việc duy trì tính toàn vẹn tham chiếu.
+
+  
+
+* <h3> Ưu điểm của Reference: </h3>
+
+	-  <b>Tối ưu hóa dung lượng lưu trữ </b>: Sử dụng reference cho phép tránh việc lặp lại thông tin trong nhiều tài liệu. Thay vì nhúng thông tin vào mỗi tài liệu, chỉ cần lưu trữ một ObjectID tham chiếu đến tài liệu liên quan.
+
+	- <b> Việc phải query ra các dữ liệu thừa cũng hạn chế hơn</b>
+
+	-  Khi chia tách data ra, chúng ta sẽ hạn chế được dung lượng phải lưu trong các documents 
+
  
+* <h3> Hạn chế của Reference:</h3>
 
- * ![alt](./mongo-design.png)
+	-  Phải thực hiện nhiều truy vấn: Khi cần lấy thông tin từ các tài liệu liên quan, bạn phải thực hiện nhiều truy vấn để truy xuất dữ liệu
+	- 	Không có tính toàn vẹn tham chiếu tự động: MongoDB không tự động duy trì tính toàn vẹn tham chiếu như các hệ quản trị cơ sở dữ liệu quan hệ truyền thống. Phải tự đảm bảo tính toàn vẹn tham chiếu bằng cách kiểm tra và quản lý các tài liệu liên quan.
 
-# Embedding vs. Referencing
+* <h3> Ưu điểm của Embbed: </h3>
 
-* MongoDB sẽ cho ta 2 lựa chọn khi thiết kế dữ liệu. Chúng ta có thể gắn dữ liệu trực tiếp vào object, hoặc reference chúng và sử dụng $lookup operation để query. 
+	-    Khi query ta có thể lấy tất cả các dữ liệu liên quan trong 1 query
 
-* *Reference  mặc dù cơ bản tương tự với Relation trong SQL, nhưng MongoDB không cung cấp các tính năng quan hệ như khóa ngoại (foreign key) hoặc các ràng buộc (constraints) tự động liên quan đến việc duy trì tính toàn vẹn tham chiếu.
+	-   Tránh việc sử dụng join với nhiều bảng như bên relational hoặc sử dụng lookup
 
-* Ưu điểm của Reference:
+	-    Update các thông tin liên quan cũng trong một câu lệnh query
 
-  - **Tối ưu hóa dung lượng lưu trữ **: Sử dụng reference cho phép bạn tránh việc lặp lại thông tin trong nhiều tài liệu. Thay vì nhúng thông tin vào mỗi tài liệu, bạn chỉ cần lưu trữ một ObjectID tham chiếu đến tài liệu liên quan.
-  - Dễ dàng thay đổi và cập nhật: Khi thông tin của tài liệu liên quan thay đổi, bạn chỉ cần cập nhật tài liệu đó mà không cần phải thay đổi các tài liệu khác tham chiếu tới nó. Điều này giúp giảm sự trùng lặp dữ liệu và đồng bộ dữ liệu dễ dàng hơn.
-  - Quản lý quan hệ phức tạp: Nếu quan hệ giữa các tài liệu phức tạp và đa cấp đến mức nhúng trở nên khó khăn hoặc gây ra kích thước tài liệu quá lớn, thì sử dụng reference cho phép bạn quản lý các quan hệ phức tạp một cách linh hoạt và hiệu quả.
+ 
+* <h3> Hạn chế của Embbed:</h3>
+       
+	-   Với mỗi document trong mongoDB chỉ giới hạn tối đa là 16MB. Do đó việc lưu quá nhiều data có thể dẫn đến việc tràn giới hạn này
+	-   Lấy các dữ liệu trong một câu query cũng đồng nghĩa với việc có thể ta sẽ lấy ra những dữ liệu không cần thiết. Ta có thể cải thiện chúng bằng cách hạn chế size của document trong mỗi câu query
+
+*  ![alt](./embedded-reference.png)
