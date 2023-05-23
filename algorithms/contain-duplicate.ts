@@ -5,8 +5,8 @@ function containsDuplicate(nums: number[]): boolean {
   const dict  : number[] = [] ;
 
   for (let i = 0; i < nums.length; i++) {
-    let t = dict.find((e) => e === nums[i]);
-    if (t != undefined) {
+    let t = dict.includes(nums[i]);
+    if (t) {
       return true;
     }
     dict.push(nums[i]);
@@ -15,7 +15,19 @@ function containsDuplicate(nums: number[]): boolean {
   return false;
 }
 
-let q: boolean = containsDuplicate([1, 2, 3, 4, 0, 0]);
+//100ms
+function containsDuplicateX(nums: number[]): boolean {
+  let dict = {};
+
+  for (let i = 0; i < nums.length; i++) {
+    if (dict[nums[i]]) {
+      return true;
+    }
+    dict[nums[i]] = 1;
+  }
+  return false;
+}
+let q: boolean = containsDuplicateX([1, 2, 3, 4, 0, 0]);
 
 /**
  * Sort - HeapSort Space O(1) | QuickSort Space O(log(N))
