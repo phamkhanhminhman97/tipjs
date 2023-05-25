@@ -223,11 +223,11 @@ Dữ liệu sẽ được sắp xếp theo thứ tự như sau:
 Với câu lệnh này xem trong execution plan thay vì sử dụng index database lại sử dụng TABLE ACCESS FULL nghĩa là nó duyệt hết các bản ghi trong bảng và so sánh với điều kiện
 
 Nhìn chung index kết hợp cũng vẫn là B-Tree để giữ các cục index được sắp xếp theo thứ tự như index 1 trường. Nhưng vì có hai trường nên database sắp xếp ưu tiên trường được đánh index đầu tiên trước (EMPLOYEE_ID) rồi sau đó sắp xếp tới các trường sau (SUBSIDIARY_ID).  Nghĩa là index không hỗ trợ tìm kiếm theo trường thứ hai
-*  ![alt](./index2.png)
+*  ![alt](./index-2.png) 
 * Nên đánh composite index theo thứ tự mà data càng unique thì xếp trước: Vd employee_id_date_birth chứ ko phải date_birth_employee_id
-*  ![alt](./composite-index.png)
+*  ![alt](./composite_index.png)
 >Hình trên mô tả trường hợp đánh index theo thứ tự trường date_of_birth trước và subsidiary_id sau. Nhìn trên hình các bạn sẽ thấy index được sắp thứ tự theo date_of_birth và subsidiary_id chỉ có ý nghĩa khi date_of_birth có giá trị bằng nhau. Vì vậy câu truy vấn index thực hiện theo DATE_OF_BIRTH, và SUBSIDIARY_ID được sử dụng rất hạn chế khi duyệt cây. Bạn có thể thấy trên hình ở leaf node có chứa bản ghi có SUBSIDIARY_ID bằng 27, nhưng ở node cành không hề có. Vì vậy trong trường hợp này điều kiện để dừng việc duyệt theo index chỉ phụ thuộc vào DATE_OF_BIRTH. Nó duyệt qua 5 leaf node như hình bên trên.
-*  ![alt](./composite-index-2.png)
+*  ![alt](./composite_index_2.png)
 > Như hình trên có thể thấy việc tìm kiếm bản ghi được thực hiện ngay lập tức không cần duyệt qua nhiều leaf node. Tại sao lại như vậy? Bởi vì đầu tiên so sánh bằng sẽ lấy ra các bản ghi có giá trị SUBSIDIARY_ID=27 đã được lấy ra, việc tiếp theo là duyệt index để tìm giá trị DATE_OF_BIRTH trong khoảng phù hợp. Vì giá trị SUBSIDIARY_ID=27 bằng nhau cho các giá trị được lấy ra lúc này việc sort theo DATE_OF_BIRTH trở lên có giá trị. Lúc này không cần phải duyệt ngược lại để tìm kiếm giá trị phù hợp, bởi vì trên branch node bạn đã thấy không có bản ghi nào lớn hơn giá trị 26/06/1969 trên leaf node trước đó. Lúc này database sẽ duyệt trực tiếp vào node thứ hai (Từ cục 23-SEP-69 đến cục 26-SEP-72) và kết thúc luôn việc duyệt.
 
 > Rule : Luôn index cho giá trị truy vấn trong toán tử bằng trước, sau đó đến range
