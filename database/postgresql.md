@@ -232,5 +232,5 @@ Nhìn chung index kết hợp cũng vẫn là B-Tree để giữ các cục inde
 
 > Rule : Luôn index cho giá trị truy vấn trong toán tử bằng trước, sau đó đến range
 * Trong việc tìm kiếm theo LIKE, chỉ có những ký tự đứng trước wild card đầu tiên có thể được dùng trong index. còn lại sẽ không được sử dụng trong ví dụ trên việc tìm kiếm theo WIN sẽ được tìm theo index còn D thì không. Trong ví dụ trên thì phần **WIN** sẽ dùng trong phần access trong predicate còn phần D thì ở trong phần filter ( access là chọn điểm đầu và điểm cuối trên leaf node còn filter là việc duyệt trên leaf node). Tại sao chỉ phần trước theo được index mà phần sau lại không được? bạn có thể xem hình sau:
-*  ![alt](./composite-index-2.png)
+*  ![alt](./wild-card.png)
 * LIKE chỉ có thể index được nếu % không đứng đầu, và càng ở sau thì càng có hiệu quả, trong trường hợp Like với % ở đầu tiên các bạn nên có các điều kiện khác để hạn chế số lượng bản ghi lại nếu không sẽ quét toàn bộ bảng. Trong trường hợp không tránh được các bạn nên sử dụng Fulltext Index.
