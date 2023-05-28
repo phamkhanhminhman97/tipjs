@@ -13,7 +13,6 @@ let largestNumber = function (array) {
   
   x = Object.values(x).sort(
     (p1, p2) => (p1 < p2) ? 1 : (p1 > p2) ? -1 : 0);
-  console.log(x);
   let str = ''
   for (let i = 0; i < x.length; i++) {
     str += x[i]
