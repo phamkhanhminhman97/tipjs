@@ -28,13 +28,18 @@ let subarraySum = function (a, k) {
   let sum = 0;
   let x = []
   for (let i = 0; i < a.length; i++) {
-    
+
     x.push(a[i]);
     sum += a[i];
-    if (i >0) {
+    if (i > 0) {
       x.push(sum);
     }
-   
+
+  }
+  for (let i = 0; i < x.length; i++) {
+    if (x[i] === k) {
+      count++;
+    }
   }
   console.log(x);
   return count;
