@@ -7,4 +7,4 @@
 
   + key= 'abcdef' -> sign = hmac(id=1 + timestamp =12h + key)
   
- - Phía server sẽ laa
+ -  Phía server sẽ lấy parameter truyền lên rồi kết hợp với key ở server để sinh ra chữ ký rồi so sánh với chữ ký được gửi đi
