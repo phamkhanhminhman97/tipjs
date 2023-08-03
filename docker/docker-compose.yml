@@ -1,0 +1,36 @@
+version: '3'
+services:
+  nodejs1:
+    image: phamminhman10/base-nestjs:v4
+    container_name: nodejs_server1
+    environment:
+      - name=server1
+    # ports:
+      # - 3000:3000
+    networks:
+      - my_network
+  
+  nodejs2:
+    image: phamminhman10/base-nestjs:v4
+    container_name: nodejs_server2
+    environment:
+      - name="server2"
+    # ports:
+      # - 3001:3000
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx:1.25.1-alpine-slim
+    container_name: nginx_server
+    # command: sh -c "apk update && apk add bash && apk add curl && apk add apache2-utils"
+    ports:
+      - "9000:80"
+    volumes:
+      - /Users/devtify/Documents/study/nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
