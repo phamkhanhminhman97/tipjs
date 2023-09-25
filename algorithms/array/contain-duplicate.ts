@@ -1,4 +1,11 @@
 
+/**
+ * Given an integer array nums, return true if any value appears at least twice in the array,
+ * and return false if every element is distinct.
+ * https://leetcode.com/problems/contains-duplicate/
+ * @param nums 
+ * @returns 
+ */
 //runtimes 9000ms
 function containsDuplicate(nums: number[]): boolean {
    nums = nums.sort();
@@ -70,3 +77,7 @@ var containsDuplicate3 = (nums) => {
   return !isEqual;
 };
 
+let qq = containsDuplicate3([1,2,3,4]);
+console.log('qq');
+
+console.log(qq);
