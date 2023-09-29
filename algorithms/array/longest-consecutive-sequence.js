@@ -33,7 +33,7 @@ var longestConsecutive = function (nums) {
   if (nums.length >= 3 && findMax(s) === 0) {
     return 1;
   }
-  return findMax(s);
+  return findMax(s); 
 };
 
 
@@ -42,25 +42,5 @@ function findMax(arr) {
   return Math.max(...arr);
 }
 
-function longestConsecutive2(nums) {
-  let mySet = new Set(nums);
-  let mySet2 = [...mySet];
-  let s = []
-  let q = 0;
-  let maxScore = 0;
-  for (let index = 0; index < mySet2.length; index++) {
-    let next = mySet[index] + 1;
-    let current = mySet[index];
-    let check = mySet.has(next);
-    const isStreak = () => mySet.has(current + 1)
-    while (isStreak()) {              /* Time O(N) */
-      current++;
-      q++;
-    }
-    maxScore = Math.max(maxScore, q);
-  }
-  return maxScore
-}
-
-let a = longestConsecutive2([3, 0, 7, 2, 5, 8, 4, 6, 0, 1,9,9])
+let a = longestConsecutive([3, 0, 7, 2, 5, 8, 4, 6, 0, 1,9,9])
 console.log(a);
