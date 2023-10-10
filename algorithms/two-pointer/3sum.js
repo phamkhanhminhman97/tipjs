@@ -1,3 +1,9 @@
+/**
+ * https://leetcode.com/problems/3sum/
+ * @param {*} nums 
+ * @returns 
+ * 142ms
+ */
 var threeSum = function (nums) {
   // Khai báo một mảng để lưu kết quả cuối cùng
   const res = [];
