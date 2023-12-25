@@ -1,0 +1,10 @@
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - echo "$KEY_PEM" 
+    - cp $KEY_PEM ./key.pem && chmod 400 ./key.pem
+    - ssh -i ./key.pem -o StrictHostKeyChecking=no ubuntu@13.213.32.146 "echo 'Hello from the remote server!' && cd base-nestjs && npm run start:uat"
+    - echo "Done"
