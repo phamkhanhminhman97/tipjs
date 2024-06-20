@@ -14,6 +14,24 @@ function twoSum1(a: number[], target: number) {
   return false;
 }
 
+var twoSum = function (nums, target) {
+    const numToIndex = new Map(); // Create a hash map to store the numbers and their indices
+
+    for (let i = 0; i < nums.length; i++) {
+        const complement = target - nums[i]; // Calculate the complement needed to reach the target
+
+        // Check if the complement exists in the hash map
+        if (numToIndex.has(complement)) {
+            return [numToIndex.get(complement), i]; // If found, return the indices
+        }
+
+        // Store the current number and its index in the hash map
+        numToIndex.set(nums[i], i);
+    }
+
+    return []; // Return an empty array if no solution is found
+};
+
 // 63ms
 function twoSum22(a: number[], target: number) {
   let object: any = {};
